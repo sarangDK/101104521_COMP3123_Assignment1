@@ -31,7 +31,7 @@ router.post('/employees', [
   // validation result
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(400).json({errors: errors.array()});
+    return res.status(400).json({status: false, errors: errors.array()});
   } 
 
   // Try/ catch block to handle exceptions for creating employee
@@ -51,7 +51,7 @@ router.get('/employees/:id', async (req, res) => {
   try {
     const employee = await Employee.findById(req.params.id);
     if (employee) {
-      res.status(200).json(employee);
+      res.status(200).json({status:true, employee});
     } else {
       res.status(404).json({ status: false, message: "Employee not found" });
     }
