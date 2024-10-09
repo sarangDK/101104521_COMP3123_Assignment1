@@ -11,9 +11,9 @@ router.get('/employees', async (req, res) => {
 
   try {
     const employees = await Employee.find();
-    res.status(200).json(employees);
+    res.status(200).json({status: true, employees});
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred', error });
+    res.status(500).json({ status: false, message: 'An error occurred', error });
   }
 });
 
@@ -38,9 +38,9 @@ router.post('/employees', [
   try {
     const newEmployee = new Employee(req.body);
     const savedEmployee = await newEmployee.save();
-    res.status(201).json({ message: "Employee Created Successfully", employee_id: savedEmployee._id });
+    res.status(201).json({ status:true, message: "Employee Created Successfully", employee_id: savedEmployee._id });
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred', error });
+    res.status(500).json({ status:false, message: 'An error occurred', error });
   }
 });
 
@@ -53,10 +53,10 @@ router.get('/employees/:id', async (req, res) => {
     if (employee) {
       res.status(200).json(employee);
     } else {
-      res.status(404).json({ message: "Employee not found" });
+      res.status(404).json({ status: false, message: "Employee not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred', error });
+    res.status(500).json({ status:false, message: 'An error occurred', error });
   }
 });
 
@@ -76,12 +76,12 @@ router.put('/employees/:eid', [
   try {
     const UpdateEmployee = await Employee.findByIdAndUpdate(req.params.eid, req.body, { new: true });
     if (UpdateEmployee) {
-      res.status(200).json({ message: "Employee details updated successfully" });
+      res.status(200).json({status:true, message: "Employee details updated successfully" });
     } else {
-      res.status(404).json({ message: "Employee not found" });
+      res.status(404).json({status:false, message: "Employee not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred', error });
+    res.status(500).json({ status:false, message: 'An error occurred', error });
   }
 });
 
@@ -91,12 +91,12 @@ router.delete('/employees/:eid', async (req, res) => {
   try {
     const deletedEmployee = await Employee.findByIdAndDelete(req.params.eid);
     if (deletedEmployee) {
-      res.status(200).json({ message: "Employee Deleted Successfully" });
+      res.status(200).json({ status: true, message: "Employee Deleted Successfully" });
     } else {
-      res.status(404).json({ message: "Employee not found" });
+      res.status(404).json({ status :false, message: "Employee not found" });
     }
   } catch (error) {
-    res.status(500).json({ message: 'An error occurred', error });
+    res.status(500).json({ status:false, message: 'An error occurred', error });
   }
 });
 

@@ -32,10 +32,10 @@ router.post('/signup', [
   //  saving the user to the database
   const newUser = new User({ username, email, password: hashedPassword });
   const savedUser = await newUser.save();
-  res.status(201).json({ message: "User Created Successfully", user_id: savedUser._id})
+  res.status(201).json({ stauts:true ,message: "User Created Successfully", user_id: savedUser._id})
   } 
   catch(error) {
-  res.status(500).json({ message: 'An error occured while creating user', error });
+  res.status(500).json({ status:false, message: 'An error occured while creating user', error });
 
 }  
 });
@@ -51,7 +51,7 @@ router.post('/signup', [
     // validation for email and password
     const errors = validationResult(req);
     if(!errors.isEmpty()) {
-      return res.status(400).json({errors: errors.array()})
+      return res.status(400).json({status:false, errors: errors.array()})
     }
 
     try {
@@ -64,13 +64,13 @@ router.post('/signup', [
     if (user && await bcrypt.compare(password, user.password)) {
 
       const token = jwt.sign({userId: user._id, email: user.email}, process.env.JWT_SECRET, {expiresIn: '2h'} );
-      res.status(200).json({ message : "Login Successful.", jwt_token: token });
+      res.status(200).json({ status: true, message : "Login Successful.", jwt_token: token });
 
     } else {
       res.status(400).json({ status: false,  message: "password or username are wrong!" });
     }
   } catch(error) {
-    res.status(500).json({message: 'Error occuered for logging in', error});
+    res.status(500).json({status: false, message: 'Error occuered for logging in', error});
   }
 });
   
