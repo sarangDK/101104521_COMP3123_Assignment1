@@ -100,4 +100,20 @@ router.delete('/employees/:eid', async (req, res) => {
   }
 });
 
+router.get('/employees/search', async (req, res) => {
+  const {department, position} = req.query;
+
+  const query = {};
+  if (department) query.department = department;
+  if (position) query.position = position;
+
+  try {
+    const employees = await Employee.find(query);
+    res.status(200).json({status: true, employees});
+  }
+  catch (error) {
+    res.status(500).json({ status:false, message: 'An error occurred', error });
+  }
+})
+
 module.exports = router;
