@@ -19,9 +19,9 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'https://101104521-comp-3123-assignment1revision.vercel.app'], // Replace with your frontend URLs
-    methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify allowed HTTP methods
-    credentials: true, // Optional: Allow cookies if needed
+    origin: ['http://localhost:3000', 'https://101104521-comp-3123-assignment1revision.vercel.app'], 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'], 
+    credentials: true, 
   })
 );
 // app.use(cors());
